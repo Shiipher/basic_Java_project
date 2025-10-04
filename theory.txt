@@ -1,0 +1,702 @@
+java
+->platform independent
+portability->write once and run anywhere
+3 main components->jvm,jre,jdk
+jvm-java virtual machine
+java program(platform independent)-compiler-bytecode-jvm-machine code-cpu-output
+
+jvm is platform dependent(jit compiler (just in time compiler))
+jre-(java runtime environment) it has-jvm+class libraries
+jdk(java development kit)
+
+ques->why in a java file we can have a single public class
+jvm needs it that is why there is a restriction
+1.main method inside public class
+2.public class name should be same as file name
+variables
+1.primitive-char(2 bytes),byte(1 byte,default-0,signed),
+    short(),int,long,float,double,boolean
+2.reference/non-primitive-class,interface,array,string,enum etc
+
+->widening/automatic->whenever lower to higher data type going
+->down casting->non-automatic
+->promotion addition of two smaller same data types leads to higher data type
+
+how float and double are stored in the memory
+
+->reference data type(non-primitive)
+no concept of pass by reference or pointers
+
+string->(string literals and string objects)
+
+wrapper classes ->1.autoboxing->conversion of primitive data type to reference {wrapper class}
+                  2.unboxing->opposite of it
+static
+static method can access only access static variables
+no use of super
+final
+
+method ->perform some task
+access specifiers-public,private,protected,default
+types of method->system defined,user defined , overloaded , overridden,static method(it is compile time)
+final method
+abstract method->always inside abstract class,implementation in child class
+vararible parameters ->int ....
+
+constructors->it is used to create an instance
+also used to initialize the instance var
+it can not be static,final,abstract,synchronized,inherited
+can not have any return type
+why same name as class->for easeness
+return type is class->implecitly
+
+java memory management
+2 types of memory -1.stack 2.heap
+both are created by jvm and stored in RAM
+heap has more memory than stack
+----stack---
+it store temp var and separate memory block for method
+primitive data types are stored
+store reference of the heap objects(objects with new keyword)
+types-1.strong reference(stack have a ref of object in heap (garbage collector does not work on it))
+2.weak reference
+each thread has its own stack memory
+varaible in scope ->in stack
+out of the scope ->not in stack
+stack full error->java lang stackoverflowerror
+
+-----heap-----
+division -1..young generation-division->1.eden(new object enters) 2.s0(age of each is 1 after first sweep left ones enters(minor gc))
+                                            3.s1(age of each is 2 after second sweep left ones enters(minor gc))
+ 2. old generation(after threshold the object gets promoted to it(major gc))
+3.non heap(metaspace(permanent generation))(class variables(with static), constant are stored)
+
+garbage collector->mark and sweep algo
+                 ->mark and sweep with compact memory
+versions of gc->1.serial gc(single thread used) 2.parallel gc(default in java 8) 3.concurrent mark and sweep(cms) 4.gi garbage
+
+types of classes
+1.concrete class
+2.abstract class
+3.super class and sub class
+4.object class
+5.nested class
+    -inner class(non static nested class)
+    -anonymous inner class
+    -member inner class
+    -local inner class
+    -static nested class/static class
+6.generic class
+-use of <> is taken to define the datatype of the  variable used in the class
+-inheritance can be implemented -can be generic or cannot be
+-generic methods are also supported
+-raw type and bounded generics(upper and multi bound generics)
+-wildcards(more flexible than generic methods)-1.upperbounded 2.lowerbounded 3.unbounded
+-type erasure-<T> gets replaced to the super class when u generate the byte code(eg.object,number)
+-public <T extends Number> void func(List<T>source,List<T>destination) ->this is an example of generic method
+-public void func(List<? extends Number>source,List<? extends String>destination)- this is wildcard
+
+7.pojo class
+-plain old java object , contains variables and its getter and setter methods
+-class should be public,just a normal Java object used to represent data.
+-public default constructor
+-no annotations should be used like @Tablr , @Entity, @Id etc
+-it should not extend any class or implement any interface
+-where it is used 1.when a request comes to our system
+
+
+8.enum class(.values(),.ordinal(),.valueOf(),.name())
+-it has collection of constants , constants are static and final implicitly
+-it can not extend any class as it internally extends java.lang.enum class
+-it can implement interfaces
+-it can have variables,constructors,methods
+-it can not be initiated(as its constructor will be private only even you give default ,in bytecode
+    it make it private)
+-no other class can extend enum class
+-it can have abstract method and all the constant should implement that abstract method
+-variables and methods defined in the enum will be applicable to all the entries in the enum
+-benefit of enum class when we create constant through static and final keyword
+types
+-normal enum class
+-enum with custom values
+-method override by constants
+-absract method in enum
+-interface implementation in enum
+-whats the advantage of enum class
+
+9.final class-cannot inherit
+
+10.singleton class-meant to create only 1 and 1 object
+types to make it--
+-eager initialization-class ke andar hi object bana do
+-lazy initialization-object is created when instance is made of the class
+                    -parallel threads aaye to mamla gobar ho jayega 2 object ban jayenge
+-synchronization block-lock and unlock, ensures a single thread is creating the instance at a time
+-double check(there is a memory issue, resolved through volatile instance variable)-solves the problem of concurrency
+              -if any object is declared volatile then any read or write operation on it is directly from the memory not from the cache
+
+-bill pugh solution
+-enum singleton
+
+11.immutable class
+-we can not change the value of an object once it is created
+-declare class as final so that it can not be extended
+-all class members should be private so that direct access can be avoided
+-and class members are initialized only once using constructor
+-there should not be any setter methods which is generally use to change the value
+-just getter methods and returns copy of the member variable
+
+12.wrapper class-chatgpt kar le and also upar bhi padh le already likh rakha h
+
+---interface---
+-it is something which helps 2 system to interact with each other , without one system has to know the details
+    of other
+-helps to achieve abstraction
+-its decalaration consist of modifiers , interface keyword , interface name, comma separated list of parent interface
+and body
+-only public and default modifiers allowed
+-it can be extended from interfaces
+-why we need it
+1.abstraction
+2.polymorphism-can be used as a data type
+3.multiple inheritance
+---methods in interface---
+-all methods are implicitly public only
+-method can not be declared as final
+---fields in interface---
+-fields are public,static , final implicitly (constants)
+-cannot make fields private or protected
+---interface implementation---
+-overriding method can not have more restrict access specifiers
+-concrete class must override all the methods declared in the interface
+-abstract classes are not forced to override all the methods
+-a class can implement from multiple interfaces
+---nested interfaces---
+-nested interface declared within another interface
+-when you implement outer interface inner interface implementation is not required and vice versa
+
+-keep note of the diff between abstract class and the interface(chatgpt)
+---java8 interface features
+-default method-resolve the mandatory condition of implementing all the methods
+               -in multiple inheritance we have to define it by our own in the child class
+-static method-can provide implementation of the method in interface
+              -it cannot be overridden which implement the interface
+              -can access by using interface name itself
+              -by default public
+-private method and static private method(java9)
+    -can provide the implementation of the method but as a private access modifier in interface
+    -it brings more readability of the code
+    -it can be defined as static and non static
+    -from static method we can call only private static interface method
+    -private static method can be called from both static and non static
+    -private interface method can not be abstract means we have to provide the definition
+    -it can be used inside of the particular interface only
+
+-why static method can only call static variables
+    static int b=10;
+    public void funcc(int a){
+    return b+a;
+    }
+    public static void func(int a){
+    b=b+a;
+    }
+
+-functional interface(@FunctionalInterface) and lambda expression
+ -if an interface contains only 1 abstract method that is known as functional interface
+ -also known as SAM(single abstract method)
+ -implementation is divided into 3 types
+    -implements
+    -anonymous class
+    -using lambda expression-way to implement
+types of functional interface
+-consumer
+    -represent an operation that accept a single input parameter and returns no result
+    -package-java.util.function
+-supplier
+    -represent the supplier of the result accepts no input parameter but produce a result
+    -package-java.util.function
+-function
+    -represent function that accepts one argument process it and produce a result
+    -package-java.util.function
+-predicate
+    -represent function that accepts one argument process it and produce a boolean result
+    -package-java.util.function
+
+----java reflection----
+-used to examine the classes methods fields interfaces at runtime and also possible to change the behaviour
+of the class too
+eg-1.what all methods present in the class
+    2.what all fields present in the class
+    3.what is the return type of the method
+    4.what is the modifier of the class
+    5.what all interfaces class has implemented
+    6.change the value of the public and private fields of the class
+-how to do reflection of the classes
+-to reflect the class we first need to get an object of class
+-present in java.lang.reflect
+--what is this class Class?
+        -instance of the class Class  represents classes during runtime
+        -jvm creates one Class object for each and evry class which is loaded during runtime
+        -this Class object , has meta data info about the particular class like the methods fields constructor
+
+how to make the class Class object--
+1.using forName()
+2.Using .class
+3.getClass()
+--reflection of methods
+--reflection of fields
+--through reflection we can set the value of the public and the private fields
+--reflection of constructor and also can make object from private constructor
+--through reflection we can break encapsulation and singleton class
+-makes program slow
+
+
+---Annotations---
+-it is kind of adding META DATA to the java code
+-its usage is OPTIONAL
+-we can use this meta data information at runtime and can add certain logic in our code if wanted
+-how to read meta data information? using reflection
+-annotations can be applied at anywhere like classes,methods,interface,fields,parameters etc
+eg-@override
+---TYPES---
+1.pre-defined annotations->1.used on annotations(called meta-annotations)
+                                -@target
+                                -@retention
+                                -@documented
+                                -@inherited
+                                -@repeatable(java8)
+                           2.used on java code(like classes , methods etc)
+                                -@deprecated
+                                -@override
+                                -@supresswarnings
+                                -@functionalinterface
+                                -@safevarargs
+2.custom annotations/user-defined
+    -these can be made using keyword @interface
+    -@{our custom name}
+
+--Annotations used on java code--
+1.@deprecated
+    -usage of deprecated class or method or fields shows you compile time WARNING
+    -deprecation means no further improvemnet is happening on this and use new alternative method or filed insted
+    -can be used over: constructor,filed,localvariable,method,package,parameter,type(class,interface,enum)
+2.@override
+    -during compile time it will check that the method should be overridden
+    -and throws compile time error if ti do not match with the parent method
+    -can be used over methods
+3.@supresswarning
+    -it tells the compiler to ignore any compile time warning
+    -use it safely could led tto run time exception if any valid warning is ifgnored
+    -can be used over:field,method,parameter,constructor,local variable,type(class,interface,enum)
+4.@functionalinterface
+    -restrict interface to have only 1 abstract method
+    -throws compilation error if more than 1 abstract method found
+    -can be used over : type(class,interface,enum)
+5.@safevarargs
+    -used to suppress heap pollution warning
+    -used over methods and constructors which has variable arguments as parameter
+    -method should be either static or final(methods which can not be overridden)
+    -in java9 we can also use it on private methods too
+    -heap pollution-object of one type storing the reference of another type object
+---annotations used over another annotations(meta-annotations)
+1.@target
+    -this meta-annotation will restrict where to use the annotation
+    -either at method or constructor or fields etc
+2.@retention
+    -this meta-annotation tells how annotation will be stored in java
+    -retentionpolicy.source:annotations will be discarded by the compiler itself and it will not be recorded
+     in .class file
+    -retentionpolicy.class:annotations will be recorded in .class file but will be ignore by jvm at runtime
+    -retentionpolicy.runtime:annotations will be recorded in .class file+available during run time
+      usage of reflection can be done
+3.@documented
+    -by default, annotations are ignored when java documentation is generated
+    -with this meta-annotation even annotations will come in java docs
+4.@inherited
+    -by default annotations applied on parent class are not available to child classes
+    -but it is after this meta-annotation
+    -this meta-annotations has no effect if annotation is used other than a class
+5.@repeatable
+    -allow us to use the same annotation more than once at same place
+    -introduced in java8
+
+---exception handling---
+-it is an event that occurs during the execution of the program
+-it will disrupt your program normal flow
+-it creates the exception object, which contain information about the error like
+    -its type of exception and message
+    -stack trace
+-runtime system use this exception object and find the class which can handle it
+
+object--->throwable-->1.error-->outofmemoryerror
+                             -->stackoverflowerror
+                      2.exception-->unchecked/runtime exception
+                                        -classcastexception
+                                        -arithmeticexception
+                                        -indexoutofboundexception
+                                            -arrayindexoutofboundexception
+                                            -stringindexoutofboundexception
+                                        -nullpointerexception
+                                        -illegalargumentexception
+                                            -numberformatexception
+                                -->checked/complie time exception
+                                        -classnotfoundexception
+                                        -interruptedexception
+                                        -ioexception
+                                            -filenotfoundexception
+                                            -eofexception
+                                            -socketexception
+                                        -sqlexception
+
+how to handle exception
+-try,catch,finally,throw,throws
+1.try
+-try block specify the code which can throw exception
+-try block is followed either by catch block or finally block
+-catch block is used to catch all the exception which can be thrown in the try block
+-multiple catch block can be used
+2.catch/finally
+-finally block can be used after try or after catch block
+-finally block will always get executed either if you just return from try block or catch block
+-at most we can add only 1 finally block
+-mostly used for closing the object , adding logs etc
+-if jvm related issues like out of memory , system shut down or our process is forcefully killed then finally
+block do not get executed
+3.throw
+-it is used to throw a new exception or
+-to re throw a exception
+
+---java collection framework---
+-collection is a group of objects.it is an interface which provides methods to work on group of objects
+-present in java.util
+-framework provide us the architecture to manage these group of objects add delete update search etc
+
+-why we need it ---
+-prior jcf we only had array vector hash tables
+-but problem with that is there is no common interface so it is difficult to remember the methods for each
+iteratable<--extends<---collection<--extends<--list<--implements--linkedlist
+                                                                --araylist
+                                                                --vector<--extends--stack
+                                             <--queue<--implements--priority queue
+                                                     <--extends--deque<--implements--arraydeque
+                                                                                   --linkedlist
+                                             <--set<--extends--sortedset<--extends--navigableset<--extends--treeset
+                                                   <--implements--hashset
+                                                                --linkedhashset
+
+1.iteratable
+    1.iterate()-it returns the iterator object which provides below methods to iterate the collection
+        -hasnext()-return true,if there are more elements in collection
+        -next()-returns the next element in the iteration
+        -remove()-removes the last element returned by iterator
+    2.foreach()-iterate collection using lambda expression.lambda expression is called for each element the collection
+
+methods---
+-size(),isempty(),contains(),toarray(),add(),remove(),addall(),removeall(),clear(),equals(),stream() and
+parallelstream(),iterator()
+
+---collection vs collections
+collection->it is a part of java collection framework and its an interface which expose various methods which
+is implemented by various classes like arraylist,stack,linkedlist etc.
+collections->it is a utility class and provide static methods,which are used to operate on collections like
+sorting searching reverse swapping copy etc.
+
+-comparator(compare(2 parameters) vs comparable(comparator(1 parameter))
+
+--deque--gpt par dekhle
+--queue--
+--list--
+--linked list--
+--vector--
+--stack--
+--map<--extends--sortedmap<--implements--treemap
+     <-implements--hashmap
+                 --hashtable
+                 --linkedhashmap
+     ---1.load factor
+        2.entry<k,v>interface
+        3.re-hashing
+        4.performance
+--set--
+----streams---
+-we can consider stream as a pipeline through which out collection elements passes through
+-while elements passes through pipelines it perform various like sorting filtering etc
+-useful when deals with bulk processing (can do parallel processing)
+
+collection-->step1. create stream(streams are created from the data source like collection or array etc)
+            step2. intermediate operations(like filter(),sorted(),map(),distinct()etc are used)
+                                          (these operations transform the stream into another stream and more operations
+                                          can be done on top of it.)
+                                          (these are lazy in nature means these operations get executed only when terminal
+                                          operations get executed only when terminal operations is invoked)
+            step3. terminal operations (like collect(),reduce(),count()etc are used)
+                                       (these operations triggers the processing of the system)
+                                       (and produce the output means after terminal operation used no more operation
+                                       we can perform)
+--ways to create a stream--
+1.from collection
+2.from array
+3.from static method
+4.from stream builder
+5.stream iterate
+
+--intermediate operation--
+1.filter(predicate<T>predicate)-filters the element
+2.map(function<T,R>mapper)-used to transform each element
+3.flatmap(function<T,stream<R>>mapper)-used to iterate over each element of the complex collection, and helps to flatten it
+4.distinct()-removes duplicate from the stream
+5.sorted()-sorts the element
+6.peek(consumer<T>action)-helps you to see the intermediate result of the stream which is getting processed
+7.limit(long maxsize)-truncate the stream to have not longer than given maxsize
+8.skip(long n)-skip the first n elements of the stream
+9.maptoint(tointfunction<T>mapper)-helps to work with primitive int data types
+10.maptolong(tolongfunction<T>mapper)-helps to work with primitive long data types
+11.maptodouble(todounblefunction<T>mapper)-helps to work with primitive double data types
+
+--why intermediate operations called as lazy-- because without terminal  operation they cant operate
+--sequence of stream operations--
+    -until any operation which requires all the elements hits single elements passes through te stream
+    -generally each element processed sequentially and can perform multiple operations this feature helps stream fast
+    process the task
+    -for eg. if you need to return any number which is greater than 3 processing
+    will stop at 4 itself
+
+--different terminal operations--
+terminal operations are the ones that produce the result it triggers the processing of the stream.
+1.foreach(consumer<T>action)-perform action on each element of the  stream. do not return any value
+2.toarray()-collects the elements of the  stream into an array
+3.reduce(binaryoperator<T>accumulator)-does reduction on th elements of th estream .perform associative aggregation function
+4.collect(Collector<T,A,R>collector)-can be used to collects the elements of the stream into a list
+5.min(Comparator<T>comparator)
+  max(Comparator<T>comparator)-finds the minimum or maximum element from the stream based on the comparator provided
+6.count()-returns the count of the element present in the stream
+7.anymatch(Predicate<T>predicate)-checks if any value in the stream match the given predicate and return the boolean
+8.allmatch(Predicate<T>predicate)-checks if all the value in the stream match the given predicate and return the boolean
+9.nonematch(Predicate<T>predicate)-checks if no value in the stream match the given predicate and return boolean
+10.findfirst()-finds the first element of the stream
+11.findany()-finds any random value to the stream
+
+--how many times we can use a single stream--
+-one terminal operation is used ona  stream it is closed/consumed and can not be used again for another terminal operation
+
+--parallel stream--
+-helps to perform operation on stream concurrently taking advantage of multi core cpu
+-parallelstream() method is used unstead of regular stream() method
+-internally it does:
+    -task splitting:it uses "spliterator" function to split the data into multiple chunks
+    -task submission and parallel processing: uses fork(divides task to subtasks)-join(joins the subtasks) pool technique
+
+---multithreading---
+-what is thread and process
+--process--
+-process is an instance of a program that is getting executed
+-it has its own resource like memory , thread etc. OS allocate these resources to process when its created
+-compilation(javac test.java)-generates bytecode that can be executed by jvm
+    -execution(java test)-at this point jvm starts the new process here test is the class which has
+        "public static void main(String args[])"method
+--how much memory does process gets
+ -while creating the process "java mainclassname" command , a new jvm instance will get created and we can tell how
+ much heap memory need to be allocated
+    -java-Xms256m-Xmx2g MainClassName
+
+    -Xms<size>:this will set the initial heap size,above,i allocated 256MB
+    -Xmx<size>:max heap size, process can get,above,i allocated 2gb,if tries to allocate more memory,"outofmemoryerror" will occur
+--code segment
+    -contains the compiled BYTECODE (machine code)of the java program
+    -it read only
+
+--thread--
+-thread is known as lightweight process
+-smallest sequence of instructions that are executed by cpu independently
+-and 1 process can have multiple threads
+-when a process is created it start with 1 thread and that initial thread known as main thread and from that
+we can create multiple threads to perform task concurrently
+-jvm provides jvm instance memory for process
+    -code segment
+        -contains the compiled BYTECODE(machine code)of the java program
+        -its read only
+        -all threads within the same process share the same code segment
+    -data segment
+        -contains the global and static variable
+        -all threads within the same process share the same data segment
+        -threads can read and modify the same data
+        -synchronization is required between multiple threads
+    -heap
+        -objects created at runtime using "new" keyword are collected in the heap
+        -heap is shared among all the threads of the same process.(but not within process)
+        -threads can read and modify the heap data
+        -synchronization is required between multiple threads
+    -stack
+        -each thread has its own STACK
+        -it manages method calls local variables
+
+    -register
+        -when JIT(just in time) compiles the BYTECODE into native machine code it uses register to optimize the generated machine code
+        -also helps in context switching
+        -each thread has its own register
+    -counter
+        -also know as program counter,it points to the instruction which is getting executed
+        -increments its counter after successfully execution of the instruction
+    ALL ARE MANAGED BY JVM
+
+multitasking vs multithreading
+
+--how can we create a thread
+    1.implementing runnable interface(generally used)
+    2.extending thread class
+--states of the thread(new,runnable,running,terminated,blocked,waiting,timed waiting)
+--monitor lock--ensures only one thread goes inside the critical section at a time
+---consumer-producer probelm--
+--synchronized can only be used on a single object--
+
+---custom locks--(do not depend on object)
+1.reentrant lock
+2.readwrite lock(shared lock and exclusive lock)(used when read are very high compared to write request)
+3.stamped lock(readwrite and optimistic)(lock-pessimistic , optimistic)
+4.
+
+
+
+
+
+before spring or spring boot
+->study servlet and servlet container
+servlet is a java class which handles client request process it and return the response
+servlet container manages the servlets
+more than one servlet can be there
+each servlet can have many functions like doget dopost etc
+web.xml is the problem 
+
+web.xml-->
+it contains the servlet mappings like customer hits some api and that is to mapped to some servlet 
+eg->
+/demoservlet/firstendpoint   this api is mapped to servlet 1 in the web.xml code
+
+
+input reques--> tomcat(servlet container)(application is deplyoed here)-->use the web.xml to determine which servlet has to be called
+-->invokes particular servlet-->response-->tomcat-->response
+
+spring solves the problems-->
+1.removal of web.xml->web.xml becoms too big and diffcult to manages->spring framework introduce annotations based configurations
+
+2.inversion of control(ioc)->it is more felxible way to manage object dependencies and its lifecycle(through dependecy injection)
+@component - tells spriong that you have to amange ethis class or bean
+@autowired - tells spring to resolve and add this object dependecy
+during runtime a object will be created and will perform functions
+tight coupling
+
+3.unit testing is hard
+
+4.difficult to manage rest api
+
+other areas where spring makes life easy for developer is integration with certain tech like hibernate
+
+input->servlet container(tomcat)(our application)->dispatcherservlet->choose the controller ->uses handlermapping
+                                                                    ->create an innstance->ioc
+                                                                    ->invokes controller method->respective api get invoked
+                                                                    ->response
+
+@enablewebmvc->loads all the depedency
+
+pom.xml
+
+configurations class
+
+dispatcher servlet class
+
+spring boot solves challengs with spring
+1.depedency management(pom.xml)->no need for adding different dependencies separately and also their versions
+
+2.auto configuration ->no need for separately running dispatcherservlet , appconfig , enablewebmvc , componentmvc
+,componentscan . spring boot add internally by default
+
+3.embedded server->no need to create war
+    in traditional spring mvc application we need to build a war file which is a packaged file containing your application classes
+    jsp pages , configuration files , dependencies
+    then we need to deploy this war file to a servlet container like tomcat
+    but in spring boot servlet container is already embedded we dont have to do do all this stuff just run the application thats all
+
+what is spring boot
+->it provides a quick way to create a production ready application
+->spring based framework
+->it support convention over configuration->use default for configuration and if developer dont want to go with convention they can override it 
+->it also help to run an application as quick as possible
+
+jar->java archive ->stand alone java application
+war->web archive->html , css , js many more
+
+            dto           utility       entity         configuration
+             |               |               |                 |
+        |----------------------------------------------------------------|
+        |                                                                |
+client->|->controller------------>service----------->repository layer    |
+        |   layer                   layer                       |        |
+        | ------------------------------------------------------|--------|
+                                                                DB
+
+
+controller layer-->
+    mapping of api parameter to request dto
+    hosts the api
+    @controller
+    @restcontroler
+
+service layer-->business logic
+
+repository layer---->DB
+
+DTO->data transfer object
+    client sending data post request
+    types-1.request dto
+          2.response dto
+
+
+utility->put anything which is common (helper methods)
+
+entity->@entity sql ki baate(classes which are direct representation of tables)
+
+configuration->application.property files(.env file)
+
+
+before maven ant was was there
+    it required what to do and how to do but in the case of maven only what to do
+Maven->its a project management tool
+    it uses POM project obejct model
+
+    build lifecycle
+    1.validate-project structure
+    2.compile-source code
+    3.test the code
+    4.package compiled code
+    5.verify the integrity of package
+    6.install the package in local repo
+    7.deploy the package in remote repo
+
+    pmd is a source code analyzer
+    ->finds unused variable
+    ->find unused imports
+    ->empty catch block
+    ->no usage of object
+    ->finds dublicate code
+
+    controllers
+    ->@controller->class is responsible for handling incoming http req(separatley write @response body)
+    ->@restcontroller->controller+response body
+    ->@reponse body->indicates teh http response body     return type
+    @requestmapping->mapping of an api
+
+     reflection->it is used toe xamine classes methods feilds interfaces at runtime and also possible to change the behaviour of the class repo
+     the class object can be created by 3 ways in it
+     1-.forname
+     2-.class
+     3-.getclass
+     it is included in java.lang.reflect
+
+
+
+
+
+                                                                                                                                    
+
+
+
