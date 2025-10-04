@@ -1,12 +1,10 @@
 package com.conceptandcoding.learningspringboot.service;
 
-import com.conceptandcoding.learningspringboot.ProductRepo;
+import com.conceptandcoding.learningspringboot.repository.ProductRepo;
 import com.conceptandcoding.learningspringboot.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service

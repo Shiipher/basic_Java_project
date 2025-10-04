@@ -1,4 +1,4 @@
-package com.conceptandcoding.learningspringboot;
+package com.conceptandcoding.learningspringboot.repository;
 
 import com.conceptandcoding.learningspringboot.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
